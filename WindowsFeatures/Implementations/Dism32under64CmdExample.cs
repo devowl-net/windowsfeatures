@@ -75,7 +75,8 @@ namespace WindowsFeatures.Implementations
             // LOCATION: "C:\Windows\" otherwise we will have in use x32.
             process.StandardInput.WriteLine("cd ..");
 
-            // cmd64.exe символьная ссылка на конкретный файл (что бы винда не подсовывала реализацию х32 битного)
+            // cmd64.exe link on specific command line (Prevent to replace on another by Operation system)
+            // Why we do it? Just because if x32 process starts cmd.exe Windows let you to launch ONLY x32 cmd.exe but we need x64 for Dism.exe (Dism is x64).
             var cmd64FullPath = Path.Combine(Environment.SystemDirectory, CmdName);
             process.StandardInput.WriteLine($@"mklink cmd64.exe ""{cmd64FullPath}""");
 
